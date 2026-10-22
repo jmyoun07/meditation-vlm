@@ -1,0 +1,25 @@
+# Eligibility criteria (protocol: Eligibility criteria).
+# Applied in stage 2 (screening). Machine-checkable rules are enforced
+# deterministically from metadata; the remaining judgment rules are decided by a
+# VLM classifier and verified on a random subsample by trained raters.
+
+# --- Deterministic (metadata) gates ---
+duration_min_minutes: 2
+duration_max_minutes: 60
+require_public: true
+exclude_age_restricted: true
+exclude_live: true               # live streams and currently-live
+require_audio_or_captions: true  # must have extractable audio OR caption track
+
+# --- VLM classifier judgment (stage 2) ---
+# Returns include=true only if ALL are satisfied:
+include_rules:
+  - "Presents a guided meditation session (verbal OR visual guidance through a practice)."
+exclude_rules:
+  - "Music- or soundscape-only with no guidance."
+  - "Lecture or talk ABOUT meditation rather than a guided session."
+
+# --- Adjudication ---
+human_subsample_fraction: 0.10   # random subsample verified by trained raters
+third_rater_on_disagreement: true
+refine_rule_before_full_run: true

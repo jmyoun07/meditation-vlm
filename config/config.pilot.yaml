@@ -1,0 +1,67 @@
+# Ready-to-use PILOT profile (~30 videos, English only, Claude + GPT).
+# Copy to config/config.yaml, add your keys (or set env vars), then run stages.
+#
+#   cp config/config.pilot.yaml config/config.yaml
+#   export YOUTUBE_API_KEY=...      ANTHROPIC_API_KEY=...     OPENAI_API_KEY=...
+#   python scripts/01_retrieve.py
+
+run:
+  label: "pilot-2026"
+  random_seed: 20260101
+  extraction_date: "2026-01-15"
+  data_dir: "data"
+
+retrieval:
+  youtube_api_key: "${YOUTUBE_API_KEY}"
+  languages: ["english"]
+  region_code: "US"
+  max_results_per_query: 8          # small: keeps the pilot near ~30 eligible
+  published_after: null
+  published_before: null
+  target_eligible_n: 30             # PILOT target
+
+extraction:
+  frame_rate_seconds: 30
+  opening_boost_seconds: 5
+  opening_window_minutes: 2
+  max_frames_per_video: 24          # tighter cap for pilot cost
+  asr_model: "whisper-base"
+  prefer_captions: true
+
+coding:
+  # Free route: Claude Opus 4.8 coded in-session (Claude Code / Max subscription,
+  # provider "anthropic_session" is skipped by the automated stage and merged by
+  # session_coding.py); Gemini free-tier API as the second, automated model.
+  models:
+    - provider: "anthropic_session"
+      model: "claude-opus-4-8"
+      temperature: 0
+    - provider: "google"
+      model: "gemini-2.5-flash"
+      temperature: 0
+  adjudicator: null
+  prompt_file: "codebook/prompts/coding_v1.md"
+  prompt_variants_for_sensitivity:
+    - "codebook/prompts/coding_v2.md"
+  eligibility_prompt_file: "codebook/prompts/eligibility_v1.md"
+  max_frames_per_call: 12
+  test_retest_fraction: 0.20        # higher fraction so pilot has retest data
+
+reliability:
+  agreement_threshold_alpha: 0.60
+  agreement_threshold_icc: 0.60
+  human_subsample_n: 10             # small for pilot
+
+analysis:
+  primary_outcomes: ["like_rate", "comment_rate"]
+  secondary_outcomes: ["video_power_index"]
+  covariates: ["session_length_min", "subscriber_count", "channel_type", "recency_days"]
+  random_effect: "channel_id"
+  fdr_method: "benjamini-hochberg"
+  vpi_formula: "views_weight*log1p(view_count) + likes_weight*log1p(like_count)"
+  vpi_weights: { views_weight: 1.0, likes_weight: 1.0 }
+
+secrets:
+  anthropic_api_key: ""
+  google_api_key: ""
+  openai_api_key: ""

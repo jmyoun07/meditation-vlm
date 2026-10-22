@@ -1,0 +1,60 @@
+{
+ "rows": [
+  [
+   "Videos in the analytic corpus, n",
+   "1,635"
+  ],
+  [
+   "Distinct channels, n",
+   "629"
+  ],
+  [
+   "Videos per channel, median (IQR)",
+   "1 (1 to 2)"
+  ],
+  [
+   "Videos from the single largest channel, n",
+   "161"
+  ],
+  [
+   "Share of corpus from the 5 largest channels, %",
+   "26.7"
+  ],
+  [
+   "Session length in minutes, median (IQR)",
+   "15.4 (10.3 to 25.1)"
+  ],
+  [
+   "Video age in days at retrieval, median (IQR)",
+   "1,636 (814 to 2,434)"
+  ],
+  [
+   "Channel subscribers, median (IQR)",
+   "182,000 (15,050 to 1,000,000)"
+  ],
+  [
+   "Views, median (IQR)",
+   "130,015 (17,453 to 491,326)"
+  ],
+  [
+   "Likes, median (IQR)",
+   "2,010 (293 to 7,243)"
+  ],
+  [
+   "Comments, median (IQR)",
+   "94 (16 to 303)"
+  ],
+  [
+   "Like rate, mean (SD)",
+   "0.01835 (0.01763)"
+  ],
+  [
+   "Comment rate, mean (SD)",
+   "0.00167 (0.00764)"
+  ],
+  [
+   "Video power index, mean (SD)",
+   "18.189 (5.624)"
+  ]
+ ]
+}

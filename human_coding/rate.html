@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Human verification coding</title>
+<style>
+  :root{
+    --ink:#1a1a1a; --ink2:#5a5f66; --line:#dcdfe4; --surface:#fff;
+    --wash:#f6f7f9; --accent:#2E74B5; --good:#117a4e; --warn:#b4531a;
+    --font:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:var(--font);color:var(--ink);background:var(--wash);
+       font-size:14px;line-height:1.5}
+  header{position:sticky;top:0;z-index:20;background:var(--surface);
+         border-bottom:1px solid var(--line);padding:10px 16px;
+         display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  header h1{font-size:15px;margin:0;font-weight:600}
+  .vid{font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--ink2)}
+  .bar{flex:1;min-width:160px;height:7px;background:var(--line);border-radius:4px;
+       overflow:hidden}
+  .bar>i{display:block;height:100%;background:var(--accent);width:0;
+         transition:width .15s}
+  button{font:inherit;padding:6px 12px;border:1px solid var(--line);
+         border-radius:6px;background:var(--surface);cursor:pointer}
+  button:hover{border-color:var(--accent);color:var(--accent)}
+  button.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+  button.primary:hover{opacity:.9;color:#fff}
+  main{display:grid;grid-template-columns:1fr 420px;gap:16px;padding:16px;
+       align-items:start}
+  @media (max-width:1100px){main{grid-template-columns:1fr}}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:10px;
+        padding:14px}
+  .frames{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+  .frames img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:5px;
+              background:var(--wash);cursor:zoom-in;border:1px solid var(--line)}
+  .frames figure{margin:0}
+  .frames figcaption{font-size:10px;color:var(--ink2);text-align:center;
+                     margin-top:2px}
+  .tx{margin-top:14px;max-height:230px;overflow:auto;white-space:pre-wrap;
+      font-size:12.5px;color:#333;background:var(--wash);padding:10px;
+      border-radius:6px;border:1px solid var(--line)}
+  .q{border-top:1px solid var(--line);padding:10px 0}
+  .q:first-child{border-top:0}
+  .q.active{background:#eef4fb;margin:0 -14px;padding:10px 14px;
+            border-left:3px solid var(--accent)}
+  .q.skipped{opacity:.45}
+  .q h3{margin:0 0 2px;font-size:13px;font-weight:600}
+  .q p{margin:0 0 7px;font-size:11.5px;color:var(--ink2)}
+  .opts{display:flex;flex-direction:column;gap:3px}
+  .opt{display:flex;align-items:center;gap:7px;padding:4px 7px;border-radius:5px;
+       cursor:pointer;border:1px solid transparent;font-size:12.5px}
+  .opt:hover{background:var(--wash)}
+  .opt.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .opt kbd{font:inherit;font-size:10.5px;min-width:16px;text-align:center;
+           border:1px solid var(--line);border-radius:3px;padding:0 3px;
+           background:var(--surface);color:var(--ink2)}
+  .opt.on kbd{background:rgba(255,255,255,.22);border-color:transparent;color:#fff}
+  footer{padding:0 16px 24px;color:var(--ink2);font-size:12px}
+  .done{color:var(--good);font-weight:600}
+  .todo{color:var(--warn)}
+  dialog{border:0;border-radius:10px;padding:0;max-width:94vw;max-height:94vh}
+  dialog img{display:block;max-width:94vw;max-height:94vh}
+  dialog::backdrop{background:rgba(0,0,0,.75)}
+  .hint{font-size:11.5px;color:var(--ink2)}
+  .rulebox{padding:22px 26px;max-width:620px;max-height:88vh;overflow:auto;
+           font-size:13px;line-height:1.6}
+  .rulebox h2{margin:0 0 4px;font-size:16px}
+  .rulebox h3{margin:16px 0 4px;font-size:13.5px;color:var(--accent)}
+  .rulebox ul{margin:4px 0;padding-left:20px}
+  .rulebox li{margin:2px 0}
+  .rulebox p{margin:4px 0}
+</style>
+</head>
+<body>
+<header>
+  <h1>Human verification coding</h1>
+  <span class="vid" id="pos"></span>
+  <span class="vid" id="vid"></span>
+  <div class="bar"><i id="barfill"></i></div>
+  <span id="count" class="vid"></span>
+  <button id="help">규칙 (?)</button>
+  <button id="prev">&larr; 이전</button>
+  <button id="next" class="primary">다음 &rarr;</button>
+  <button id="export">내보내기</button>
+</header>
+
+<dialog id="rules">
+  <div class="rulebox">
+    <h2>코딩 규칙</h2>
+    <p class="hint">모델에게 준 지시문과 동일합니다. 비교가 성립하려면 같은
+    규칙을 써야 합니다.</p>
+    <h3>대원칙</h3>
+    <ul>
+      <li><b>보이는 것만</b> 코딩합니다. 치료적 질·정확성·효과·안전성은 판단
+      대상이 아닙니다.</li>
+      <li>입력만으로 정말 판정이 안 되면 <b>기타 / 해당 없음</b>을 고릅니다.
+      자신 있게 추측하지 않습니다.</li>
+      <li>근거는 12장의 프레임과 전사뿐입니다. 영상을 따로 찾아보지 마세요.</li>
+    </ul>
+    <h3>A1 주요 기법 — 주된 실습 하나</h3>
+    <ul>
+      <li><b>호흡 집중</b>: 주의를 호흡이나 하나의 대상에 묶어 둠</li>
+      <li><b>바디스캔</b>: 신체 부위를 순서대로 훑음</li>
+      <li><b>자애</b>: 선의·연민의 문구를 반복(메타)</li>
+      <li><b>열린 관찰 마음챙김</b>: 떠오르는 무엇이든 열어 두고 알아차림</li>
+      <li><b>심상·시각화</b>: 장면이나 이미지를 유도</li>
+      <li><b>요가 니드라·이완</b>: 누워서 하는 깊은 이완, NSDR류</li>
+      <li><b>움직임·걷기</b>: 걷기 또는 마음챙김 움직임</li>
+      <li><b>기타</b>: 위 일곱에 들어맞지 않음</li>
+    </ul>
+    <h3>A2 화면 호흡 가이드</h3>
+    <p>들숨·날숨을 맞추게 하는 <b>움직이는</b> 페이서(커졌다 작아지는 도형,
+    경로를 따라 가는 점)만 "있음". <b>정지 이미지는 페이서가 아닙니다.</b>
+    호흡을 말로만 유도하는 것도 아닙니다.</p>
+    <h3>A4 시각·언어 일치</h3>
+    <p>페이서 속도와 말로 유도하는 호흡 속도가 맞는지. 페이서가 없거나 언어
+    유도가 없으면 해당 없음. 페이서가 없다고 답하면 자동으로 채워집니다.</p>
+    <h3>A5 진행자 노출</h3>
+    <p>사람이 화면에 나와 진행하면 "화면에 등장", 사람 없이 영상·이미지에
+    목소리만 얹히면 "영상만, 목소리만", 두 가지가 섞이면 "혼합".</p>
+    <h3>A6 주된 배경 — 지배적인 것 하나</h3>
+    <p>스튜디오·실내 / 자연 / 추상·애니메이션 / 텍스트만 / 기타.</p>
+    <h3>A7 자연 이미지 존재</h3>
+    <p>주된 배경이 무엇이든, <b>어디에든</b> 자연 이미지가 나오면 "있음".
+    A6과 독립적입니다. 배경이 스튜디오여도 창밖 풍경이 나오면 "있음".</p>
+    <h3>A8 자세·수인 시연</h3>
+    <p>앉거나 누운 명상 자세, 또는 특정 손 모양(수인)을 <b>화면에서 보여주면</b>
+    "있음". 말로만 설명하는 것은 아닙니다.</p>
+    <p class="hint">아무 곳이나 눌러 닫기</p>
+  </div>
+</dialog>
+
+<main>
+  <section class="card">
+    <div class="frames" id="frames"></div>
+    <div class="tx" id="tx"></div>
+  </section>
+  <section class="card" id="qs"></section>
+</main>
+
+<footer>
+  <p class="hint">숫자키로 선택하면 다음 문항으로 자동 이동합니다. 마지막 문항을
+  고르면 다음 영상으로 넘어갑니다. <b>←</b> <b>→</b> 영상 이동,
+  <b>Backspace</b> 이전 문항. 진행 상황은 브라우저에 자동 저장되지만,
+  작업이 끝나면 반드시 <b>내보내기</b>를 눌러 파일을 저장하세요.</p>
+  <p class="hint">모델이 매긴 코드는 이 화면에 없습니다. 비교의 독립성을 위한
+  것이니 다른 곳에서도 찾아보지 마세요.</p>
+</footer>
+
+<dialog id="zoom"><img alt=""></dialog>
+
+<script>
+const STORE = "human-coding-v1";
+const QUESTIONS = [
+  {key:"technique", label:"A1. 주요 명상 기법",
+   help:"프레임과 전사를 근거로 한 가지 주 기법. 혼합이면 더 비중 있는 쪽.",
+   opts:[["focused_attention_breath","호흡 집중"],["body_scan","바디스캔"],
+         ["loving_kindness","자애"],["open_monitoring_mindfulness","열린 관찰 마음챙김"],
+         ["visualization_imagery","심상·시각화"],["yoga_nidra_body_relaxation","요가 니드라·이완"],
+         ["movement_walking","움직임·걷기"],["other","기타"]]},
+  {key:"visual_breathing_guide", label:"A2. 화면 호흡 가이드",
+   help:"들숨·날숨을 맞추게 하는 애니메이션 페이서(커졌다 작아지는 도형, 경로를 따라 움직이는 점 등).",
+   opts:[["true","있음"],["false","없음"]]},
+  {key:"visual_verbal_congruence", label:"A4. 시각·언어 일치",
+   help:"페이서 속도와 말로 유도하는 호흡 속도의 일치 여부. 페이서나 언어 유도가 없으면 해당 없음.",
+   cond:v => v.visual_breathing_guide === "true",
+   auto:"not_applicable",
+   opts:[["concordant","일치"],["discordant","불일치"],["not_applicable","해당 없음"]]},
+  {key:"presenter_visibility", label:"A5. 진행자 노출",
+   help:"사람 진행자가 화면에 나오는지.",
+   opts:[["on_screen_presenter","화면에 등장"],["visuals_only_voiceover","영상만, 목소리만"],
+         ["mixed","혼합"]]},
+  {key:"setting_imagery", label:"A6. 주된 배경",
+   help:"세션을 지배하는 시각적 배경 한 가지.",
+   opts:[["studio","스튜디오·실내"],["nature","자연"],["abstract_animated","추상·애니메이션"],
+         ["text_only","텍스트만"],["other","기타"]]},
+  {key:"nature_imagery_present", label:"A7. 자연 이미지 존재",
+   help:"주된 배경과 무관하게 자연 이미지가 어디든 등장하는지.",
+   opts:[["true","있음"],["false","없음"]]},
+  {key:"posture_or_mudra_shown", label:"A8. 자세·수인 시연",
+   help:"앉거나 누운 명상 자세, 또는 특정 손 모양(수인)을 화면에서 보여주는지.",
+   opts:[["true","있음"],["false","없음"]]},
+];
+
+let DATA = null, i = 0, aq = 0;
+let codes = JSON.parse(localStorage.getItem(STORE) || "{}");
+
+const save = () => { try { localStorage.setItem(STORE, JSON.stringify(codes)); }
+                     catch (e) {} };
+const cur  = () => DATA.items[i];
+const rec  = () => (codes[cur().video_id] ||= {});
+
+// A question is skipped when its condition is unmet; it takes its automatic
+// value so the exported row is still complete.
+function visible() {
+  const v = rec();
+  return QUESTIONS.map((q, n) => ({q, n, on: !q.cond || q.cond(v)}));
+}
+
+function render() {
+  const it = cur(), v = rec();
+  document.getElementById("pos").textContent = `${i + 1} / ${DATA.items.length}`;
+  document.getElementById("vid").textContent = it.video_id;
+  const done = DATA.items.filter(x => complete(x.video_id)).length;
+  document.getElementById("count").innerHTML =
+    `<span class="${done === DATA.items.length ? "done" : "todo"}">${done} 완료</span>`;
+  document.getElementById("barfill").style.width =
+    (100 * done / DATA.items.length) + "%";
+
+  document.getElementById("frames").innerHTML = it.frames.map((f, k) => {
+    const s = (f.match(/_(\d+)s\.jpg$/) || [,"?"])[1];
+    return `<figure><img src="../${f}" alt="frame ${k + 1}" loading="lazy">
+            <figcaption>${s}s</figcaption></figure>`;
+  }).join("");
+  document.getElementById("tx").textContent = it.transcript || "(전사 없음)";
+
+  document.getElementById("qs").innerHTML = visible().map(({q, n, on}) => {
+    const val = v[q.key];
+    return `<div class="q ${n === aq ? "active" : ""} ${on ? "" : "skipped"}"
+                 data-q="${n}">
+      <h3>${q.label}${on ? "" : " — 자동: 해당 없음"}</h3>
+      <p>${q.help}</p>
+      <div class="opts">${q.opts.map(([o, ko], k) => `
+        <label class="opt ${val === o ? "on" : ""}" data-q="${n}" data-o="${o}">
+          <kbd>${k + 1}</kbd><span>${ko}</span></label>`).join("")}</div>
+    </div>`;
+  }).join("");
+}
+
+function complete(id) {
+  const v = codes[id] || {};
+  return QUESTIONS.every(q => (q.cond && !q.cond(v)) ? true : v[q.key] != null);
+}
+
+function set(n, val) {
+  const q = QUESTIONS[n], v = rec();
+  v[q.key] = val;
+  (v._chosen ||= {})[q.key] = true;
+  // A2 governs A4. Answering "no pacer" fills congruence automatically; later
+  // answering "pacer" must take that automatic value back out, or the question
+  // stays answered with a value nobody chose.
+  QUESTIONS.forEach(x => {
+    if (!x.cond) return;
+    if (!x.cond(v)) { v[x.key] = x.auto; delete v._chosen[x.key]; }
+    else if (!v._chosen[x.key]) { delete v[x.key]; }
+  });
+  save();
+  advance();
+}
+
+function advance() {
+  const vis = visible().filter(x => x.on).map(x => x.n);
+  const nxt = vis.find(n => n > aq);
+  if (nxt != null) { aq = nxt; render(); }
+  else if (i < DATA.items.length - 1) { go(1); }
+  else { aq = vis[vis.length - 1]; render(); }
+}
+
+function go(d) {
+  i = Math.max(0, Math.min(DATA.items.length - 1, i + d));
+  aq = visible().filter(x => x.on)[0].n;
+  localStorage.setItem(STORE + ":at", String(i));
+  render();
+  window.scrollTo({top: 0});
+}
+
+document.addEventListener("click", e => {
+  const o = e.target.closest(".opt");
+  if (o) { aq = +o.dataset.q; set(+o.dataset.q, o.dataset.o); return; }
+  const img = e.target.closest(".frames img");
+  if (img) { const d = document.getElementById("zoom");
+             d.querySelector("img").src = img.src; d.showModal(); return; }
+  if (e.target.closest("dialog")) document.getElementById("zoom").close();
+});
+
+document.addEventListener("keydown", e => {
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  if (e.key === "ArrowRight") { go(1); e.preventDefault(); return; }
+  if (e.key === "ArrowLeft")  { go(-1); e.preventDefault(); return; }
+  if (e.key === "Backspace") {
+    const vis = visible().filter(x => x.on).map(x => x.n);
+    const p = [...vis].reverse().find(n => n < aq);
+    if (p != null) { aq = p; render(); }
+    e.preventDefault(); return;
+  }
+  if (e.key === "?" || e.key === "/") {
+    document.getElementById("rules").showModal(); e.preventDefault(); return;
+  }
+  if (document.getElementById("rules").open) return;
+  const k = parseInt(e.key, 10);
+  if (k >= 1 && k <= 9) {
+    const q = QUESTIONS[aq];
+    if (q && q.opts[k - 1]) { set(aq, q.opts[k - 1][0]); e.preventDefault(); }
+  }
+});
+
+document.getElementById("help").onclick =
+  () => document.getElementById("rules").showModal();
+document.getElementById("rules").onclick =
+  () => document.getElementById("rules").close();
+document.getElementById("next").onclick = () => go(1);
+document.getElementById("prev").onclick = () => go(-1);
+document.getElementById("export").onclick = () => {
+  const rows = DATA.items.map(it => {
+    const v = codes[it.video_id] || {};
+    const row = {video_id: it.video_id};
+    QUESTIONS.forEach(q => { if (v[q.key] != null) row[q.key] = v[q.key]; });
+    return row;                      // bookkeeping keys stay out of the export
+  });
+  const blob = new Blob([JSON.stringify({seed: DATA.seed, rows}, null, 1)],
+                        {type: "application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "human_codes.json";
+  a.click();
+};
+
+fetch("subsample.json").then(r => r.json()).then(d => {
+  DATA = d;
+  i = Math.min(+(localStorage.getItem(STORE + ":at") || 0), d.items.length - 1);
+  aq = visible().filter(x => x.on)[0].n;
+  render();
+});
+</script>
+</body>
+</html>

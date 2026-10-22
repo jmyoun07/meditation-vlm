@@ -1,0 +1,102 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MeditationVideoCoding",
+  "description": "Structured output contract for VLM coding of one guided meditation video. Only VLM-coded variables (codebook groups A) are requested from the model; computed/metadata variables (B/C/D) are produced by the pipeline, not the model.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "video_id",
+    "technique",
+    "visual_breathing_guide",
+    "breathing_cadence_bpm",
+    "visual_verbal_congruence",
+    "presenter_visibility",
+    "setting_imagery",
+    "nature_imagery_present",
+    "posture_or_mudra_shown",
+    "background_sound_type",
+    "onscreen_text_overlay"
+  ],
+  "properties": {
+    "video_id": {
+      "type": "string",
+      "description": "YouTube video id, echoed back for join integrity."
+    },
+    "technique": {
+      "type": "string",
+      "enum": [
+        "focused_attention_breath",
+        "body_scan",
+        "loving_kindness",
+        "open_monitoring_mindfulness",
+        "visualization_imagery",
+        "yoga_nidra_body_relaxation",
+        "movement_walking",
+        "other"
+      ]
+    },
+    "technique_secondary": {
+      "type": ["string", "null"],
+      "enum": [
+        "focused_attention_breath",
+        "body_scan",
+        "loving_kindness",
+        "open_monitoring_mindfulness",
+        "visualization_imagery",
+        "yoga_nidra_body_relaxation",
+        "movement_walking",
+        "other",
+        null
+      ],
+      "description": "Secondary technique for clearly mixed sessions; null otherwise."
+    },
+    "visual_breathing_guide": {
+      "type": "boolean",
+      "description": "On-screen animated breathing pacer present."
+    },
+    "breathing_cadence_bpm": {
+      "type": ["number", "null"],
+      "minimum": 2,
+      "maximum": 20,
+      "description": "Breaths per minute of the pacer; null if no visual breathing guide."
+    },
+    "visual_verbal_congruence": {
+      "type": "string",
+      "enum": ["concordant", "discordant", "not_applicable"]
+    },
+    "presenter_visibility": {
+      "type": "string",
+      "enum": ["on_screen_presenter", "visuals_only_voiceover", "mixed"]
+    },
+    "setting_imagery": {
+      "type": "string",
+      "enum": ["studio", "nature", "abstract_animated", "text_only", "other"]
+    },
+    "nature_imagery_present": { "type": "boolean" },
+    "posture_or_mudra_shown": { "type": "boolean" },
+    "background_sound_type": {
+      "type": "string",
+      "enum": [
+        "none",
+        "ambient_nature",
+        "singing_bowls",
+        "binaural_isochronic_tones",
+        "music",
+        "other"
+      ]
+    },
+    "onscreen_text_overlay": {
+      "type": "boolean",
+      "description": "Guiding text overlays burned into the video (NOT platform closed captions)."
+    },
+    "confidence": {
+      "type": "object",
+      "description": "Optional self-reported confidence 0-1 per judged field, for reliability triage.",
+      "additionalProperties": true
+    },
+    "evidence": {
+      "type": "string",
+      "description": "Brief, auditable justification citing what in the frames/transcript drove the codes. No clinical-quality claims."
+    }
+  }
+}

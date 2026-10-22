@@ -1,0 +1,3 @@
+outcome,term,estimator,beta,ci_low,ci_high,ci_type,converged,n,n_feature_positive,prevalence
+like_rate,C(visual_breathing_guide)[T.True],firth,0.23989780634913413,-2.501206654605398,1.8045046279239774,profile_likelihood,True,1598,39,0.024405506883604506
+comment_rate,C(visual_breathing_guide)[T.True],firth,1.9694019269576337,-2.7551728930257635,4.604027214072161,profile_likelihood,True,1595,39,0.02445141065830721

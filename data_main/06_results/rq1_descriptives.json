@@ -1,0 +1,318 @@
+{
+  "technique": {
+    "visualization_imagery": 337,
+    "focused_attention_breath": 330,
+    "body_scan": 270,
+    "loving_kindness": 265,
+    "yoga_nidra_body_relaxation": 216,
+    "open_monitoring_mindfulness": 126,
+    "movement_walking": 71,
+    "other": 20
+  },
+  "visual_verbal_congruence": {
+    "not_applicable": 1587,
+    "concordant": 46,
+    "discordant": 2
+  },
+  "presenter_visibility": {
+    "visuals_only_voiceover": 1045,
+    "on_screen_presenter": 342,
+    "mixed": 248
+  },
+  "setting_imagery": {
+    "nature": 865,
+    "abstract_animated": 279,
+    "other": 218,
+    "studio": 153,
+    "text_only": 120
+  },
+  "background_sound_type": {
+    "music": 1040,
+    "none": 418,
+    "ambient_nature": 120,
+    "other": 28,
+    "binaural_isochronic_tones": 17,
+    "singing_bowls": 12
+  },
+  "visual_breathing_guide": {
+    "false": 1595,
+    "true": 40
+  },
+  "nature_imagery_present": {
+    "true": 1127,
+    "false": 508
+  },
+  "posture_or_mudra_shown": {
+    "false": 1095,
+    "true": 540
+  },
+  "onscreen_text_overlay": {
+    "false": 925,
+    "true": 710
+  },
+  "breathing_cadence_bpm": {
+    "n_with_cadence": 47,
+    "n_pacer_consensus": 36,
+    "n_cadence_without_consensus_pacer": 11,
+    "median": 3.8125,
+    "q1": 3.1500000000000004,
+    "q3": 5.8125,
+    "mean": 5.551666666666666,
+    "sd": 3.984172256746509,
+    "min": 2.0,
+    "max": 16.5,
+    "n_in_resonance_band_4_5_to_6_5": 8,
+    "n_below_4_5": 21,
+    "n_above_6_5": 7
+  },
+  "silence_to_voice_ratio": {
+    "mean": 0.14665382794658632,
+    "sd": 0.17495637001125772,
+    "n": 1620
+  },
+  "voice_pacing_wpm": {
+    "mean": 68.58889921765548,
+    "sd": 26.94513506340134,
+    "n": 1620
+  },
+  "technique_by_feature": {
+    "body_scan": {
+      "n": 270,
+      "visual_breathing_guide": 0,
+      "nature_imagery_present": 200,
+      "posture_or_mudra_shown": 75,
+      "onscreen_text_overlay": 86,
+      "visual_verbal_congruence": {
+        "not_applicable": 268,
+        "concordant": 2
+      },
+      "presenter_visibility": {
+        "visuals_only_voiceover": 177,
+        "mixed": 48,
+        "on_screen_presenter": 45
+      },
+      "setting_imagery": {
+        "nature": 158,
+        "abstract_animated": 49,
+        "other": 28,
+        "studio": 23,
+        "text_only": 12
+      },
+      "background_sound_type": {
+        "music": 167,
+        "none": 74,
+        "ambient_nature": 21,
+        "other": 4,
+        "binaural_isochronic_tones": 2,
+        "singing_bowls": 2
+      }
+    },
+    "focused_attention_breath": {
+      "n": 330,
+      "visual_breathing_guide": 39,
+      "nature_imagery_present": 237,
+      "posture_or_mudra_shown": 128,
+      "onscreen_text_overlay": 156,
+      "visual_verbal_congruence": {
+        "not_applicable": 289,
+        "concordant": 40,
+        "discordant": 1
+      },
+      "presenter_visibility": {
+        "visuals_only_voiceover": 190,
+        "on_screen_presenter": 98,
+        "mixed": 42
+      },
+      "setting_imagery": {
+        "nature": 170,
+        "abstract_animated": 65,
+        "studio": 48,
+        "other": 41,
+        "text_only": 6
+      },
+      "background_sound_type": {
+        "music": 196,
+        "none": 97,
+        "ambient_nature": 20,
+        "other": 12,
+        "singing_bowls": 3,
+        "binaural_isochronic_tones": 2
+      }
+    },
+    "loving_kindness": {
+      "n": 265,
+      "visual_breathing_guide": 0,
+      "nature_imagery_present": 180,
+      "posture_or_mudra_shown": 112,
+      "onscreen_text_overlay": 85,
+      "visual_verbal_congruence": {
+        "not_applicable": 264,
+        "discordant": 1
+      },
+      "presenter_visibility": {
+        "visuals_only_voiceover": 147,
+        "on_screen_presenter": 81,
+        "mixed": 37
+      },
+      "setting_imagery": {
+        "nature": 126,
+        "other": 58,
+        "studio": 38,
+        "abstract_animated": 36,
+        "text_only": 7
+      },
+      "background_sound_type": {
+        "music": 136,
+        "none": 113,
+        "ambient_nature": 9,
+        "other": 4,
+        "singing_bowls": 2,
+        "binaural_isochronic_tones": 1
+      }
+    },
+    "movement_walking": {
+      "n": 71,
+      "visual_breathing_guide": 0,
+      "nature_imagery_present": 61,
+      "posture_or_mudra_shown": 9,
+      "onscreen_text_overlay": 23,
+      "visual_verbal_congruence": {
+        "not_applicable": 71
+      },
+      "presenter_visibility": {
+        "visuals_only_voiceover": 43,
+        "on_screen_presenter": 19,
+        "mixed": 9
+      },
+      "setting_imagery": {
+        "nature": 49,
+        "abstract_animated": 11,
+        "other": 7,
+        "text_only": 2,
+        "studio": 2
+      },
+      "background_sound_type": {
+        "music": 40,
+        "none": 20,
+        "ambient_nature": 8,
+        "binaural_isochronic_tones": 3
+      }
+    },
+    "open_monitoring_mindfulness": {
+      "n": 126,
+      "visual_breathing_guide": 0,
+      "nature_imagery_present": 83,
+      "posture_or_mudra_shown": 50,
+      "onscreen_text_overlay": 46,
+      "visual_verbal_congruence": {
+        "not_applicable": 126
+      },
+      "presenter_visibility": {
+        "visuals_only_voiceover": 75,
+        "on_screen_presenter": 35,
+        "mixed": 16
+      },
+      "setting_imagery": {
+        "nature": 63,
+        "other": 22,
+        "studio": 22,
+        "abstract_animated": 16,
+        "text_only": 3
+      },
+      "background_sound_type": {
+        "music": 60,
+        "none": 51,
+        "ambient_nature": 8,
+        "other": 5,
+        "binaural_isochronic_tones": 1,
+        "singing_bowls": 1
+      }
+    },
+    "other": {
+      "n": 20,
+      "visual_breathing_guide": 0,
+      "nature_imagery_present": 14,
+      "posture_or_mudra_shown": 3,
+      "onscreen_text_overlay": 6,
+      "visual_verbal_congruence": {
+        "not_applicable": 20
+      },
+      "presenter_visibility": {
+        "visuals_only_voiceover": 14,
+        "mixed": 3,
+        "on_screen_presenter": 3
+      },
+      "setting_imagery": {
+        "nature": 9,
+        "other": 7,
+        "abstract_animated": 3,
+        "studio": 1
+      },
+      "background_sound_type": {
+        "music": 17,
+        "other": 2,
+        "none": 1
+      }
+    },
+    "visualization_imagery": {
+      "n": 337,
+      "visual_breathing_guide": 1,
+      "nature_imagery_present": 244,
+      "posture_or_mudra_shown": 123,
+      "onscreen_text_overlay": 143,
+      "visual_verbal_congruence": {
+        "not_applicable": 334,
+        "concordant": 3
+      },
+      "presenter_visibility": {
+        "visuals_only_voiceover": 227,
+        "mixed": 71,
+        "on_screen_presenter": 39
+      },
+      "setting_imagery": {
+        "nature": 200,
+        "abstract_animated": 83,
+        "other": 37,
+        "studio": 11,
+        "text_only": 6
+      },
+      "background_sound_type": {
+        "music": 278,
+        "ambient_nature": 31,
+        "none": 22,
+        "binaural_isochronic_tones": 6
+      }
+    },
+    "yoga_nidra_body_relaxation": {
+      "n": 216,
+      "visual_breathing_guide": 0,
+      "nature_imagery_present": 108,
+      "posture_or_mudra_shown": 40,
+      "onscreen_text_overlay": 165,
+      "visual_verbal_congruence": {
+        "not_applicable": 215,
+        "concordant": 1
+      },
+      "presenter_visibility": {
+        "visuals_only_voiceover": 172,
+        "mixed": 22,
+        "on_screen_presenter": 22
+      },
+      "setting_imagery": {
+        "nature": 90,
+        "text_only": 84,
+        "other": 18,
+        "abstract_animated": 16,
+        "studio": 8
+      },
+      "background_sound_type": {
+        "music": 146,
+        "none": 40,
+        "ambient_nature": 23,
+        "singing_bowls": 4,
+        "binaural_isochronic_tones": 2,
+        "other": 1
+      }
+    }
+  }
+}

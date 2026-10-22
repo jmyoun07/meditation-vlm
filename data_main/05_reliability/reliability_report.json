@@ -1,0 +1,131 @@
+{
+  "inter_model": {
+    "technique": 0.8878864366519817,
+    "visual_verbal_congruence": 0.7137728745293757,
+    "presenter_visibility": 0.7751375823725724,
+    "setting_imagery": 0.8120830794433367,
+    "background_sound_type": 0.36976649929668093,
+    "visual_breathing_guide": 0.8107097820212574,
+    "nature_imagery_present": 0.8912498900591106,
+    "posture_or_mudra_shown": 0.8802564102564102,
+    "onscreen_text_overlay": 0.5253476434057408,
+    "breathing_cadence_bpm": null
+  },
+  "test_retest": {
+    "technique": 0.9368748669929772,
+    "visual_verbal_congruence": 0.9260471204188482,
+    "presenter_visibility": 0.8564532520325203,
+    "setting_imagery": 0.8964895529911258,
+    "background_sound_type": 0.5827921542772375,
+    "visual_breathing_guide": 0.9386155517616017,
+    "nature_imagery_present": 0.921050004990518,
+    "posture_or_mudra_shown": 0.9667861041905775,
+    "onscreen_text_overlay": 0.8491445074106365,
+    "breathing_cadence_bpm": null
+  },
+  "prompt_sensitivity": {
+    "technique": 0.8933208334807372,
+    "visual_verbal_congruence": 1.0,
+    "presenter_visibility": 0.8430784041679644,
+    "setting_imagery": 0.848842806233523,
+    "background_sound_type": 0.1392978225791831,
+    "visual_breathing_guide": 0.9587863463969659,
+    "nature_imagery_present": 0.949363156259708,
+    "posture_or_mudra_shown": 0.8769229759098639,
+    "onscreen_text_overlay": 0.7233258732114567,
+    "breathing_cadence_bpm": null
+  },
+  "human_agreement": {
+    "note": "no human_codes.parquet provided"
+  },
+  "low_reliability_excluded": [
+    "background_sound_type",
+    "onscreen_text_overlay"
+  ],
+  "not_assessable": [
+    "breathing_cadence_bpm"
+  ],
+  "not_assessable_no_variance": [],
+  "variable_flags": {
+    "technique": {
+      "value": 0.8878864366519817,
+      "status": "reliable",
+      "reason": null,
+      "n_levels_observed": 8,
+      "n_observations": 3270,
+      "reliable": true
+    },
+    "visual_verbal_congruence": {
+      "value": 0.7137728745293757,
+      "status": "reliable",
+      "reason": null,
+      "n_levels_observed": 3,
+      "n_observations": 3270,
+      "reliable": true
+    },
+    "presenter_visibility": {
+      "value": 0.7751375823725724,
+      "status": "reliable",
+      "reason": null,
+      "n_levels_observed": 3,
+      "n_observations": 3270,
+      "reliable": true
+    },
+    "setting_imagery": {
+      "value": 0.8120830794433367,
+      "status": "reliable",
+      "reason": null,
+      "n_levels_observed": 5,
+      "n_observations": 3270,
+      "reliable": true
+    },
+    "background_sound_type": {
+      "value": 0.36976649929668093,
+      "status": "low_reliability",
+      "reason": null,
+      "n_levels_observed": 6,
+      "n_observations": 3270,
+      "reliable": false
+    },
+    "visual_breathing_guide": {
+      "value": 0.8107097820212574,
+      "status": "reliable",
+      "reason": null,
+      "n_levels_observed": 2,
+      "n_observations": 3270,
+      "reliable": true
+    },
+    "nature_imagery_present": {
+      "value": 0.8912498900591106,
+      "status": "reliable",
+      "reason": null,
+      "n_levels_observed": 2,
+      "n_observations": 3270,
+      "reliable": true
+    },
+    "posture_or_mudra_shown": {
+      "value": 0.8802564102564102,
+      "status": "reliable",
+      "reason": null,
+      "n_levels_observed": 2,
+      "n_observations": 3270,
+      "reliable": true
+    },
+    "onscreen_text_overlay": {
+      "value": 0.5253476434057408,
+      "status": "low_reliability",
+      "reason": null,
+      "n_levels_observed": 2,
+      "n_observations": 3270,
+      "reliable": false
+    },
+    "breathing_cadence_bpm": {
+      "value": null,
+      "status": "not_assessable",
+      "reason": "insufficient_overlap",
+      "n_levels_observed": 23,
+      "n_observations": 76,
+      "reliable": false
+    }
+  }
+}

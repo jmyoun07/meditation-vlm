@@ -1,0 +1,17 @@
+outcome,term,n,contrast,beta,pred_off,pred_on,abs_change_pp,rel_change_pct
+like_rate,C(visual_breathing_guide)[T.True],1584,present vs absent,-0.302355,0.018597,0.013823,-0.477,-25.7
+like_rate,C(nature_imagery_present)[T.True],1584,present vs absent,-0.128761,0.020171,0.017785,-0.239,-11.8
+like_rate,C(posture_or_mudra_shown)[T.True],1584,present vs absent,0.19695,0.017155,0.020801,0.365,21.3
+like_rate,silence_to_voice_ratio_z,1584,per +1 SD,-0.087224,0.018478,0.016965,-0.151,-8.2
+like_rate,voice_pacing_wpm_z,1584,per +1 SD,0.058336,0.018478,0.019563,0.108,5.9
+like_rate,session_length_min_z,1584,per +1 SD,-0.044979,0.018478,0.017682,-0.08,-4.3
+like_rate,log_subscribers_z,1584,per +1 SD,-0.055639,0.018478,0.017499,-0.098,-5.3
+like_rate,recency_days_z,1584,per +1 SD,-0.397202,0.018478,0.012509,-0.597,-32.3
+comment_rate,C(visual_breathing_guide)[T.True],1581,present vs absent,-0.261703,0.001693,0.001304,-0.039,-23.0
+comment_rate,C(nature_imagery_present)[T.True],1581,present vs absent,-0.386813,0.002202,0.001498,-0.07,-32.0
+comment_rate,C(posture_or_mudra_shown)[T.True],1581,present vs absent,0.328786,0.001499,0.00208,0.058,38.8
+comment_rate,silence_to_voice_ratio_z,1581,per +1 SD,-0.143828,0.001686,0.001461,-0.023,-13.4
+comment_rate,voice_pacing_wpm_z,1581,per +1 SD,0.125446,0.001686,0.001911,0.022,13.3
+comment_rate,session_length_min_z,1581,per +1 SD,-0.023082,0.001686,0.001648,-0.004,-2.3
+comment_rate,log_subscribers_z,1581,per +1 SD,-0.412791,0.001686,0.001117,-0.057,-33.7
+comment_rate,recency_days_z,1581,per +1 SD,-0.549592,0.001686,0.000975,-0.071,-42.2

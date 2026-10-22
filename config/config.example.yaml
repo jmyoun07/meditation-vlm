@@ -1,0 +1,61 @@
+# Copy to config/config.yaml and fill in. config.yaml is git-ignored.
+# Anything here can also be supplied via environment variables (see src/config.py).
+
+run:
+  label: "pilot-2026"            # tag stamped on all artifacts of this run
+  random_seed: 20260101
+  extraction_date: "2026-01-15"  # fixed reference date for recency_days
+  data_dir: "data"
+
+retrieval:
+  youtube_api_key: "${YOUTUBE_API_KEY}"   # or set env var YOUTUBE_API_KEY
+  languages: ["english"]          # add "korean" for the parallel exploratory set
+  region_code: "US"
+  max_results_per_query: 200      # cap before deduplication
+  published_after: null           # optional ISO date to fix retrieval window
+  published_before: null
+  target_eligible_n: 2000         # protocol target (~250-350 per technique)
+
+extraction:
+  frame_rate_seconds: 30          # one frame every N seconds (baseline)
+  opening_boost_seconds: 5        # denser sampling in the opening segment...
+  opening_window_minutes: 2       # ...for the first N minutes
+  max_frames_per_video: 40        # cap to bound VLM cost
+  asr_model: "whisper-base"       # used when no caption track / for timestamps
+  prefer_captions: true           # use platform captions when available
+
+coding:
+  # Protocol requires >=2 VLMs for inter-model agreement (RQ4).
+  models:
+    - provider: "anthropic"
+      model: "claude-opus-4-8"
+      temperature: 0
+    - provider: "openai"
+      model: "gpt-4o"            # vision-capable; pin exact version at prereg
+      temperature: 0
+  adjudicator: null               # optional 3rd model id for tie-breaks
+  prompt_file: "codebook/prompts/coding_v1.md"
+  prompt_variants_for_sensitivity:   # RQ4 prompt-sensitivity re-extraction
+    - "codebook/prompts/coding_v2.md"
+  eligibility_prompt_file: "codebook/prompts/eligibility_v1.md"
+  test_retest_fraction: 0.10      # random subsample re-coded under same settings
+
+reliability:
+  agreement_threshold_alpha: 0.60
+  agreement_threshold_icc: 0.60
+  human_subsample_n: 150          # trained non-expert raters
+
+analysis:
+  primary_outcomes: ["like_rate", "comment_rate"]
+  secondary_outcomes: ["video_power_index"]
+  covariates: ["session_length_min", "subscriber_count", "channel_type", "recency_days"]
+  random_effect: "channel_id"
+  fdr_method: "benjamini-hochberg"
+  vpi_formula: "views_weight*log1p(view_count) + likes_weight*log1p(like_count)"
+  vpi_weights: { views_weight: 1.0, likes_weight: 1.0 }
+
+secrets:
+  # Optional: keep keys here instead of env vars. Leave blank to use env.
+  anthropic_api_key: ""
+  google_api_key: ""
+  openai_api_key: ""

@@ -1,0 +1,61 @@
+# Secrets & local config
+config/config.yaml
+.env
+
+# Data (only ids + derived codes are ever shared; raw artifacts stay local)
+data/
+*.parquet
+*.mp4
+*.m4a
+*.wav
+*.jpg
+*.png
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+config/config.main.yaml
+
+# Main-run artifacts: keep only the small reliability/result outputs
+data_main/*
+!data_main/05_reliability
+!data_main/06_results
+!data_main/07_share
+
+# Local tooling
+.codegraph/
+.Rhistory
+.codegraph
+
+# Human-verification inputs: subsample.json embeds transcript text, which is
+# not redistributed (the file is reproducible from its seed via
+# scripts/make_human_subsample.py).
+human_coding/subsample.json
+
+# Staging copy for the OSF upload, rebuilt by scripts/stage_osf_upload.py
+osf_upload/
+
+# Any backup or variant of a credentialed config, however suffixed.
+config/config.main.yaml*
+config/*.bak*
+*.bak-*
+
+# --- Excluded from the public repository -----------------------------------
+# A third-party published article, kept locally as a formatting reference.
+# Redistributing it would infringe the publisher's copyright.
+JMIR Adolescent Depressed Mood and Suicidality.docx
+
+# Personal agent instructions and writing rules; not research artifacts.
+CLAUDE.md
+AGENTS.md
+논문작성_규칙_마스터.md
+.claude/
+
+# The manuscript text itself. Publishing it makes the work a preprint, which
+# JMIR permits but requires the cover letter to disclose. Add it deliberately.
+manuscript/

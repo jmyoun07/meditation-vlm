@@ -1,0 +1,52 @@
+# Technique-specific seed queries (protocol: Data source and search strategy).
+# Primary analysis = English. Korean set retrieved in parallel for an
+# exploratory cross-language comparison. Every string here is logged to the
+# retrieval manifest for reproducibility.
+#
+# Map: codebook technique label -> list of seed queries.
+
+english:
+  focused_attention_breath:
+    - "breathing meditation"
+    - "focused attention meditation"
+    - "breath awareness meditation guided"
+  body_scan:
+    - "body scan meditation"
+    - "guided body scan relaxation"
+  loving_kindness:
+    - "loving-kindness meditation"
+    - "metta meditation guided"
+  open_monitoring_mindfulness:
+    - "mindfulness meditation"
+    - "open monitoring meditation guided"
+    - "guided meditation"            # broad anchor query
+  visualization_imagery:
+    - "visualization meditation"
+    - "guided imagery meditation"
+  yoga_nidra_body_relaxation:
+    - "yoga nidra"
+    - "guided deep relaxation meditation"
+  movement_walking:
+    - "walking meditation guided"
+    - "mindful movement meditation"
+
+korean:
+  focused_attention_breath:
+    - "호흡 명상"
+    - "집중 명상 가이드"
+  body_scan:
+    - "바디스캔 명상"
+    - "신체 이완 명상"
+  loving_kindness:
+    - "자애 명상"
+  open_monitoring_mindfulness:
+    - "마음챙김 명상"
+    - "가이드 명상"
+  visualization_imagery:
+    - "심상 명상"
+    - "시각화 명상"
+  yoga_nidra_body_relaxation:
+    - "요가 니드라"
+    - "깊은 이완 명상"
+  movement_walking:
+    - "걷기 명상"

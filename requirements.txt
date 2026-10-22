@@ -1,0 +1,31 @@
+# Core data
+pandas>=2.1
+pyarrow>=14.0
+numpy>=1.26
+pyyaml>=6.0
+
+# Retrieval
+google-api-python-client>=2.100   # YouTube Data API v3
+isodate>=0.6                      # parse ISO 8601 durations
+youtube-transcript-api>=0.6       # caption transcripts (no download)
+jsonschema>=4.0                   # validate VLM structured output
+
+# Extraction
+yt-dlp>=2024.1                    # video/audio download for frame sampling
+# ffmpeg must be installed at the OS level (brew install ffmpeg)
+openai-whisper>=20231117          # ASR with word timestamps (or faster-whisper)
+
+# VLM coding (install only the providers you use)
+anthropic>=0.40
+google-generativeai>=0.8
+openai>=1.40
+
+# Reliability & statistics
+krippendorff>=0.6
+pingouin>=0.5                     # ICC
+statsmodels>=0.14                 # GLMs, mixed models
+scipy>=1.11
+
+# Utilities
+tqdm>=4.66
+tenacity>=8.2                     # API retry/backoff
